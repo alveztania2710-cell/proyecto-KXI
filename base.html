@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>KXI | Audífonos</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <header class="encabezado">
+        <div class="logo">
+            <span>🎧 KXI</span>
+        </div>
+
+        <nav class="menu">
+            <a href="{{ url_for('inicio') }}">Inicio</a>
+            <a href="{{ url_for('catalogo') }}">Catálogo</a>
+            <a href="{{ url_for('carrito') }}">Carrito</a>
+            <a href="{{ url_for('ventas') }}">Ventas</a>
+        </nav>
+    </header>
+
+    <main class="contenedor">
+
+        {% with mensajes = get_flashed_messages() %}
+            {% if mensajes %}
+                <div class="mensajes">
+                    {% for mensaje in mensajes %}
+                        <p>{{ mensaje }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block contenido %}
+        {% endblock %}
+
+    </main>
+
+    <footer class="pie">
+        <p>© 2026 KXI Audífonos</p>
+        <p>Siente la música. Vive el sonido.</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block titulo %}KXI | Catalogo{% endblock %}
+
+{% block contenido %}
+<section class="seccion">
+    <span class="etiqueta">DESCUBRE TU SONIDO</span>
+    <h1>Catalogo <span>KXI</span></h1>
+    <p class="subtitulo">Elige tus audifonos favoritos.</p>
+
+    <div class="productos">
+        {% for id, producto in productos.items() %}
+        <article class="tarjeta">
+            <div class="producto-icono">♫</div>
+            <h2>{{ producto.name }}</h2>
+            <p>{{ producto.description }}</p>
+            <strong class="precio">${{ "{:,}".format(producto.price) }} MXN</strong>
+
+            <form action="{{ url_for('agregar', product_id=id) }}"
+                  method="POST">
+                <button class="boton" type="submit">
+                    Agregar al carrito
+                </button>
+            </form>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

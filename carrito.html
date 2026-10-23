@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block titulo %}KXI | Carrito{% endblock %}
+
+{% block contenido %}
+<section class="seccion">
+    <h1>Tu <span>carrito</span></h1>
+
+    {% if items %}
+    <form action="{{ url_for('actualizar_carrito') }}" method="POST">
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>${{ "{:,}".format(item.price) }}</td>
+                        <td>
+                            <input class="cantidad" type="number"
+                                   name="{{ item.id }}"
+                                   value="{{ item.quantity }}"
+                                   min="0" max="99" required>
+                        </td>
+                        <td>${{ "{:,}".format(item.subtotal) }}</td>
+                        <td>
+                            <button class="boton-eliminar" type="button"
+                                onclick="document.getElementById('eliminar-{{ item.id }}').submit()">
+                                Quitar
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <p class="nota">Usa 0 como cantidad para quitar un producto al actualizar.</p>
+        <button class="boton boton-secundario" type="submit">
+            Actualizar carrito
+        </button>
+    </form>
+
+    {% for item in items %}
+    <form id="eliminar-{{ item.id }}"
+          action="{{ url_for('eliminar', product_id=item.id) }}"
+          method="POST" class="oculto"></form>
+    {% endfor %}
+
+    <div class="total">
+        <span>Total:</span>
+        <strong>${{ "{:,}".format(total) }} MXN</strong>
+    </div>
+
+    <a class="boton" href="{{ url_for('comprar') }}">Continuar compra</a>
+    <a class="enlace" href="{{ url_for('catalogo') }}">Seguir comprando</a>
+    {% else %}
+    <div class="vacio">
+        <div class="producto-icono">♫</div>
+        <h2>Tu carrito esta vacio</h2>
+        <p>Agrega unos audifonos para comenzar.</p>
+        <a class="boton" href="{{ url_for('catalogo') }}">Ir al catalogo</a>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

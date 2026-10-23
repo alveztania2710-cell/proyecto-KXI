@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block titulo %}KXI | Pedido confirmado{% endblock %}
+
+{% block contenido %}
+<section class="confirmacion">
+    <div class="confirmacion-icono">✓</div>
+    <span class="etiqueta">GRACIAS POR ELEGIR KXI</span>
+    <h1>¡Pedido <span>registrado!</span></h1>
+    <p>Gracias, {{ pedido.nombre }}. Tu pedido de demostracion se registro correctamente.</p>
+
+    <div class="resumen">
+        <p><strong>Pedido:</strong> #{{ pedido.numero }}</p>
+        <p><strong>Fecha:</strong> {{ pedido.fecha }}</p>
+        <p><strong>Metodo:</strong> {{ pedido.pago }}</p>
+        <hr>
+        {% for item in pedido.items %}
+        <div class="resumen-fila">
+            <span>{{ item.name }} × {{ item.quantity }}</span>
+            <strong>${{ "{:,}".format(item.subtotal) }}</strong>
+        </div>
+        {% endfor %}
+        <div class="resumen-fila resumen-total">
+            <span>Total</span>
+            <strong>${{ "{:,}".format(pedido.total) }} MXN</strong>
+        </div>
+    </div>
+
+    <p class="aviso">Este pedido es una demostracion escolar, no una compra real.</p>
+    <a class="boton" href="{{ url_for('catalogo') }}">Volver al catalogo</a>
+</section>
+{% endblock %}

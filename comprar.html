@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block titulo %}KXI | Comprar{% endblock %}
+
+{% block contenido %}
+<section class="formulario-seccion">
+    <h1>Finalizar <span>compra</span></h1>
+    <p>Revisa tu pedido antes de confirmarlo.</p>
+
+    <div class="resumen">
+        {% for item in items %}
+        <div class="resumen-fila">
+            <span>{{ item.name }} × {{ item.quantity }}</span>
+            <strong>${{ "{:,}".format(item.subtotal) }}</strong>
+        </div>
+        {% endfor %}
+        <div class="resumen-fila resumen-total">
+            <span>Total</span>
+            <strong>${{ "{:,}".format(total) }} MXN</strong>
+        </div>
+    </div>
+
+    <form method="POST" class="formulario">
+        <label for="nombre">Nombre del cliente</label>
+        <input id="nombre" name="nombre" type="text"
+               maxlength="100" required>
+
+        <label for="correo">Correo electronico</label>
+        <input id="correo" name="correo" type="email"
+               maxlength="150" required>
+
+        <label for="pago">Metodo de pago de demostracion</label>
+        <select id="pago" name="pago" required>
+            <option value="">Selecciona una opcion</option>
+            <option value="credito">Tarjeta de credito (simulacion)</option>
+            <option value="debito">Tarjeta de debito (simulacion)</option>
+        </select>
+
+        <p class="aviso">
+            Proyecto escolar: esta pagina no cobra dinero ni procesa tarjetas.
+        </p>
+
+        <button class="boton" type="submit">
+            Confirmar pedido de prueba
+        </button>
+    </form>
+</section>
+{% endblock %}

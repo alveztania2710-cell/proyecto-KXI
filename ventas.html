@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block titulo %}KXI | Resumen de ventas{% endblock %}
+
+{% block contenido %}
+<section class="seccion">
+    <span class="etiqueta">PANEL DE DEMOSTRACION</span>
+    <h1>Resumen de <span>ventas</span></h1>
+    <p class="subtitulo">
+        Datos de prueba de esta sesion del navegador.
+    </p>
+
+    <div class="estadisticas">
+        <article class="tarjeta">
+            <p>Ingresos registrados</p>
+            <strong class="precio">${{ "{:,}".format(ingresos) }} MXN</strong>
+        </article>
+        <article class="tarjeta">
+            <p>Unidades en pedidos</p>
+            <strong class="precio">{{ unidades }}</strong>
+        </article>
+        <article class="tarjeta">
+            <p>Pedidos registrados</p>
+            <strong class="precio">{{ pedidos|length }}</strong>
+        </article>
+    </div>
+
+    <h2>Historial de pedidos</h2>
+    {% if pedidos %}
+    <div class="tabla-contenedor">
+        <table>
+            <thead>
+                <tr>
+                    <th>Pedido</th>
+                    <th>Cliente</th>
+                    <th>Fecha</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pedido in pedidos %}
+                <tr>
+                    <td>#{{ pedido.numero }}</td>
+                    <td>{{ pedido.nombre }}</td>
+                    <td>{{ pedido.fecha }}</td>
+                    <td>${{ "{:,}".format(pedido.total) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>Aun no hay pedidos de prueba registrados.</p>
+    {% endif %}
+</section>
+{% endblock %}
